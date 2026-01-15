@@ -1,46 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Municipal Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-image: url("{{ url_for('static', filename='images/smart_city.jpg') }}");
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .login-card {
-      background: white;
-      padding: 30px;
-      width: 380px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Municipal Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial }
+
+.page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #eef3f7;
+}
+
+.bg {
+  position:absolute;
+  inset:0;
+}
+
+.login-box {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 380px;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.login-box img {
+  width: 80px;
+}
+
+.login-box h2 { margin: 10px 0 5px; }
+.login-box p { color:#555; font-size:14px; }
+
+.login-box input {
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+.login-box button {
+  width:100%;
+  padding:10px;
+  background:#0d6efd;
+  border:none;
+  color:white;
+  font-size:16px;
+  border-radius:6px;
+}
+
+.error { color:red; font-size:14px; }
+</style>
 </head>
 
 <body>
+<div class="page">
 
-<div class="login-card">
-  <img src="{{ url_for('static', filename='images/govt_logo.png') }}" width="80">
-  <h5 class="mt-2">Government of India</h5>
-  <p class="text-muted">Municipal Waste System</p>
+  <div class="bg">
+    <img src="{{ url_for('static', filename='images/smart_city.jpg') }}">
+  </div>
 
-  {% if error %}
-    <p class="text-danger">{{ error }}</p>
-  {% endif %}
+  <div class="login-box">
+    <img src="{{ url_for('static', filename='images/govt_logo.png') }}">
+    <h2>Government of India</h2>
+    <p>Municipal Waste System</p>
 
-  <form method="post">
-    <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
-    <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
-    <button class="btn btn-primary w-100">Login</button>
-  </form>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button>Login</button>
+    </form>
+  </div>
+
 </div>
-
 </body>
 </html>
