@@ -77,7 +77,7 @@ smart-waste-dashboard/
 
 ---
 
-## ⚙️ Local Setup (Optional)
+## ⚙️ Local Setup 
 
 ```bash
 pip install -r requirements.txt
