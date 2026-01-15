@@ -1,52 +1,73 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 
 app = Flask(__name__)
-app.secret_key = "smart-waste-secret"
+app.secret_key = "smart_waste_secret_key"
 
-# Dummy login (demo purpose)
-USER_EMAIL = "admin@govt.in"
-USER_PASSWORD = "admin123"
+# LOGIN CREDENTIALS (DEMO)
+USERNAME = "admin@govt.in"
+PASSWORD = "1234"
 
-# ESP DATA (initially empty)
-ESP_DATA = []
+# EMPTY STORAGE (NO ESP = NO BIN)
+bin_data = {}   # key = bin_id, value = data
 
-@app.route("/", methods=["GET", "POST"])
+# ---------------- HOME ----------------
+@app.route("/")
+def home():
+    if "user" in session:
+        return redirect("/dashboard")
+    return redirect("/login")
+
+# ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
+        email = request.form["email"].strip()
+        password = request.form["password"].strip()
 
-        if email == USER_EMAIL and password == USER_PASSWORD:
+        if email == USERNAME and password == PASSWORD:
             session["user"] = email
-            return redirect(url_for("dashboard"))
+            return redirect("/dashboard")
         else:
             return render_template("login.html", error="Invalid login")
 
     return render_template("login.html")
 
+# ---------------- DASHBOARD ----------------
 @app.route("/dashboard")
 def dashboard():
     if "user" not in session:
-        return redirect(url_for("login"))
+        return redirect("/login")
+    return render_template("dashboard.html", data=bin_data)
 
-    return render_template(
-        "dashboard.html",
-        data=ESP_DATA,
-        total_bins=len(ESP_DATA)
-    )
-
+# ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("login"))
+    return redirect("/login")
 
-# ESP will call this API later
-@app.route("/api/esp-data", methods=["POST"])
-def esp_data():
-    global ESP_DATA
-    ESP_DATA = [request.json]
-    return {"status": "ok"}
+# ---------------- ESP DATA API ----------------
+@app.route("/update", methods=["POST"])
+def update():
+    data = request.form
 
+    bin_id = data.get("bin_id")
+    area = data.get("area")
+    gas = int(data.get("gas"))
+    level = int(data.get("level"))
+
+    status = "NORMAL"
+    if gas > 400 or level > 80:
+        status = "CRITICAL"
+
+    bin_data[bin_id] = {
+        "area": area,
+        "gas": gas,
+        "level": level,
+        "status": status
+    }
+
+    return jsonify({"message": "Data received successfully"})
+
+# ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)
