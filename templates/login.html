@@ -1,81 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Smart Waste Dashboard</title>
-<meta http-equiv="refresh" content="5">
+<title>Municipal Login</title>
 <style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-
-.box {
-  display:inline-block;
-  width:30%;
+body { font-family: Arial; background:#eef2f3; text-align:center; }
+form {
+  background:white;
+  width:300px;
+  margin:auto;
   padding:20px;
-  color:white;
-  font-size:20px;
-  border-radius:6px;
-  text-align:center;
+  margin-top:100px;
+  border-radius:8px;
 }
-
-.green { background:green; }
-.yellow { background:orange; }
-.blue { background:#0d6efd; }
-
-table {
-  width:100%;
-  margin-top:20px;
-  border-collapse:collapse;
-}
-th, td {
-  border:1px solid #ccc;
+input, button {
+  width:90%;
   padding:10px;
-  text-align:center;
+  margin:10px 0;
 }
-
-.status-normal { color:green; font-weight:bold; }
-.status-warning { color:orange; font-weight:bold; }
-.status-critical { color:red; font-weight:bold; }
+button { background:#0d6efd; color:white; border:none; }
 </style>
 </head>
 
 <body>
 
-<h2>Smart Waste Monitoring Dashboard</h2>
+<form method="post">
+<h3>Government of India</h3>
+<p>Municipal Waste System</p>
 
-<div class="box green">Total Bins<br>{{ 1 if data else 0 }}</div>
-<div class="box yellow">Monitoring<br>LIVE</div>
-<div class="box blue">System<br>ONLINE</div>
-
-<table>
-<tr>
-<th>Bin ID</th>
-<th>Area</th>
-<th>Waste Type</th>
-<th>Gas</th>
-<th>Bin Level (%)</th>
-<th>Status</th>
-</tr>
-
-{% if data %}
-<tr>
-<td>{{ data.bin_id }}</td>
-<td>{{ data.area }}</td>
-<td>{{ data.waste_type }}</td>
-<td>{{ data.gas }}</td>
-<td>{{ data.level }}</td>
-<td class="
-{% if data.status=='NORMAL' %}status-normal
-{% elif data.status=='WARNING' %}status-warning
-{% else %}status-critical{% endif %}
-">
-{{ data.status }}
-</td>
-</tr>
-{% else %}
-<tr>
-<td colspan="6">No ESP data received yet</td>
-</tr>
-{% endif %}
-</table>
+<input name="email" placeholder="Email" required>
+<input type="password" name="password" placeholder="Password" required>
+<button type="submit">Login</button>
+</form>
 
 </body>
 </html>
