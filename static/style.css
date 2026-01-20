@@ -1,0 +1,84 @@
+body { margin:0; font-family:Arial; background:#f4f4f4; }
+
+.login-bg {
+  position:fixed;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+}
+
+.login-box {
+  width:320px;
+  margin:120px auto;
+  background:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+}
+
+.logo { width:60px; }
+
+input, button {
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+
+button { background:#0d6efd; color:white; border:none; }
+
+.error { color:red; }
+
+.top {
+  background:#198754;
+  color:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.logout {
+  background:red;
+  color:white;
+  padding:6px 12px;
+  text-decoration:none;
+  border-radius:5px;
+}
+
+.banner {
+  width:100%;
+  height:250px;
+  object-fit:cover;
+}
+
+.cards {
+  display:flex;
+  gap:15px;
+  padding:20px;
+}
+
+.card {
+  flex:1;
+  padding:20px;
+  text-align:center;
+  color:white;
+  border-radius:8px;
+}
+
+.green { background:#198754; }
+.orange { background:#f0ad4e; }
+.blue { background:#0d6efd; }
+
+table {
+  width:95%;
+  margin:auto;
+  border-collapse:collapse;
+}
+
+th, td {
+  border:1px solid #ccc;
+  padding:10px;
+  text-align:center;
+}
+
+.CRITICAL { background:#f8d7da; }
