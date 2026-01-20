@@ -1,81 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Smart Waste Dashboard</title>
-<meta http-equiv="refresh" content="5">
-<style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-
-.box {
-  display:inline-block;
-  width:30%;
-  padding:20px;
-  color:white;
-  font-size:20px;
-  border-radius:6px;
-  text-align:center;
-}
-
-.green { background:green; }
-.yellow { background:orange; }
-.blue { background:#0d6efd; }
-
-table {
-  width:100%;
-  margin-top:20px;
-  border-collapse:collapse;
-}
-th, td {
-  border:1px solid #ccc;
-  padding:10px;
-  text-align:center;
-}
-
-.status-normal { color:green; font-weight:bold; }
-.status-warning { color:orange; font-weight:bold; }
-.status-critical { color:red; font-weight:bold; }
-</style>
+  <title>Smart Waste Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
-<h2>Smart Waste Monitoring Dashboard</h2>
+<div class="top">
+  <h2>Smart Waste Monitoring Dashboard</h2>
+  <a href="/logout" class="logout">Logout</a>
+</div>
 
-<div class="box green">Total Bins<br>{{ 1 if data else 0 }}</div>
-<div class="box yellow">Monitoring<br>LIVE</div>
-<div class="box blue">System<br>ONLINE</div>
+<img src="/static/images/waste.jpg" class="banner">
+
+<div class="cards">
+  <div class="card green">Total Bins<br><span id="bins">0</span></div>
+  <div class="card orange">Monitoring<br>LIVE</div>
+  <div class="card blue">System<br>ONLINE</div>
+</div>
 
 <table>
-<tr>
-<th>Bin ID</th>
-<th>Area</th>
-<th>Waste Type</th>
-<th>Gas</th>
-<th>Bin Level (%)</th>
-<th>Status</th>
-</tr>
-
-{% if data %}
-<tr>
-<td>{{ data.bin_id }}</td>
-<td>{{ data.area }}</td>
-<td>{{ data.waste_type }}</td>
-<td>{{ data.gas }}</td>
-<td>{{ data.level }}</td>
-<td class="
-{% if data.status=='NORMAL' %}status-normal
-{% elif data.status=='WARNING' %}status-warning
-{% else %}status-critical{% endif %}
-">
-{{ data.status }}
-</td>
-</tr>
-{% else %}
-<tr>
-<td colspan="6">No ESP data received yet</td>
-</tr>
-{% endif %}
+  <thead>
+    <tr>
+      <th>Bin ID</th>
+      <th>Area</th>
+      <th>Waste</th>
+      <th>Gas</th>
+      <th>Level %</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="row">
+    <tr><td colspan="6">No ESP data received yet</td></tr>
+  </tbody>
 </table>
+
+<script>
+setInterval(() => {
+  fetch("/api/data")
+    .then(r => r.json())
+    .then(d => {
+      if (!d) return;
+
+      let status = "NORMAL";
+      if (d.gas > 400 || d.level > 80) status = "CRITICAL";
+
+      document.getElementById("bins").innerText = 1;
+      document.getElementById("row").innerHTML = `
+        <tr class="${status}">
+          <td>${d.bin_id}</td>
+          <td>${d.area}</td>
+          <td>${d.waste_type}</td>
+          <td>${d.gas}</td>
+          <td>${d.level}</td>
+          <td>${status}</td>
+        </tr>`;
+    });
+}, 3000);
+</script>
 
 </body>
 </html>
