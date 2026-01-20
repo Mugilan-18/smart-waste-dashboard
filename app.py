@@ -1,44 +1,52 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from datetime import timedelta
 
 app = Flask(__name__)
+app.secret_key = "smart_waste_secret"
+app.permanent_session_lifetime = timedelta(minutes=30)
 
 latest_data = None
 
 @app.route("/")
-def home():
+def root():
     return redirect("/login")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        if (
-            request.form["email"] == "admin@govt.in"
-            and request.form["password"] == "admin123"
-        ):
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email == "admin@govt.in" and password == "admin123":
+            session["login"] = True
             return redirect("/dashboard")
+        else:
+            return render_template("login.html", error="Invalid login")
+
     return render_template("login.html")
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html", data=latest_data)
+    if not session.get("login"):
+        return redirect("/login")
+    return render_template("dashboard.html")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+# ---------- ESP API ----------
 @app.route("/api/update", methods=["POST"])
 def update():
     global latest_data
-    data = request.json
-
-    # STATUS LOGIC
-    if data["level"] > 80 or data["gas"] > 400:
-        status = "CRITICAL"
-    elif data["level"] > 60 or data["gas"] > 300:
-        status = "WARNING"
-    else:
-        status = "NORMAL"
-
-    data["status"] = status
-    latest_data = data
-
+    latest_data = request.json
     return jsonify({"message": "Data received"}), 200
 
+@app.route("/api/data")
+def data():
+    return jsonify(latest_data)
+
+# ---------- RUN ----------
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
