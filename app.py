@@ -5,7 +5,13 @@ app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
 app.permanent_session_lifetime = timedelta(minutes=30)
 
-latest_data = None
+latest_data = {
+    "bin_id": "-",
+    "area": "-",
+    "gas": 0,
+    "level": 0,
+    "status": "OFFLINE"
+}
 
 @app.route("/")
 def root():
@@ -14,15 +20,10 @@ def root():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-
-        if email == "admin@govt.in" and password == "admin123":
+        if request.form["email"] == "admin@govt.in" and request.form["password"] == "admin123":
             session["login"] = True
             return redirect("/dashboard")
-        else:
-            return render_template("login.html", error="Invalid login")
-
+        return render_template("login.html", error="Invalid Login")
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -36,20 +37,36 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# ---------- ESP API ----------
+# -------- ESP API --------
 @app.route("/api/update", methods=["POST"])
 def update():
     global latest_data
-    latest_data = request.json
-    return jsonify({"message": "Data received"}), 200
+    data = request.json
+
+    level = int(data.get("level", 0))
+    gas = int(data.get("gas", 0))
+
+    if level >= 90 or gas >= 300:
+        status = "CRITICAL"
+    elif level >= 60:
+        status = "WARNING"
+    else:
+        status = "NORMAL"
+
+    latest_data = {
+        "bin_id": data.get("bin_id"),
+        "area": data.get("area"),
+        "gas": gas,
+        "level": level,
+        "status": status
+    }
+
+    return jsonify({"message": "OK"}), 200
 
 @app.route("/api/data")
 def data():
-    if latest_data:
-        return jsonify(latest_data)
-    return jsonify({"status": "no_data"})
+    return jsonify(latest_data)
 
-# ---------- RUN ----------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 
