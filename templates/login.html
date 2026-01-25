@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Smart City Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="login-bg">
 
-  <div class="login-card">
-    <img src="{{ url_for('static', filename='images/govt_logo.png') }}" class="logo">
+<div class="login-card">
+  <img src="/static/images/govt_logo.png" width="80">
+  <h3>Government of India</h3>
+  <p>Municipal Waste System</p>
 
-    <h2>Government of India</h2>
-    <p>Municipal Waste System</p>
-
-    {% if error %}
-      <p class="error">{{ error }}</p>
-    {% endif %}
-
-    <form method="POST">
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
+  <form method="post">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button>Login</button>
+    {% if error %}<p class="error">{{error}}</p>{% endif %}
+  </form>
+</div>
 
 </body>
 </html>
+
 
 
