@@ -4,19 +4,16 @@
   <title>Municipal Login</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="login-body">
-
-<img src="/static/images/smart_city.jpg" class="login-bg">
+<body class="center">
 
 <div class="login-box">
-  <img src="/static/images/govt_logo.png" class="logo">
-  <h3>Government of India</h3>
-  <p>Municipal Waste System</p>
+  <h2>Government of India</h2>
+  <p>Smart Waste Monitoring</p>
 
   <form method="POST">
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
-    <button>Login</button>
+    <button type="submit">Login</button>
   </form>
 
   {% if error %}
@@ -26,3 +23,4 @@
 
 </body>
 </html>
+
