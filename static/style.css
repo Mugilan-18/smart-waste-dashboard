@@ -1,73 +1,46 @@
 body {
-  font-family: Arial;
-  background: #f2f2f2;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.login-bg {
+  background: url("../images/smart_city.jpg") no-repeat center center/cover;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.login-box {
-  background: white;
+.login-card {
+  background: rgba(255,255,255,0.95);
   padding: 30px;
-  width: 300px;
+  width: 360px;
+  border-radius: 10px;
   text-align: center;
 }
 
-.login-box input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
+.logo {
+  width: 80px;
+  margin-bottom: 10px;
 }
 
-button {
-  padding: 10px;
+.login-card input {
   width: 100%;
-  background: #0d6efd;
-  color: white;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
   border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .error {
   color: red;
 }
 
-.top-bar {
-  background: green;
-  color: white;
-  padding: 15px;
-}
-
-.logout {
-  float: right;
-  color: red;
-  text-decoration: none;
-}
-
-table {
-  width: 90%;
-  margin: 30px auto;
-  border-collapse: collapse;
-  background: white;
-}
-
-th, td {
-  padding: 12px;
-  border: 1px solid #ccc;
-  text-align: center;
-}
-
-.NORMAL {
-  background: #c8e6c9;
-}
-
-.WARNING {
-  background: #fff3cd;
-}
-
-.CRITICAL {
-  background: #f8d7da;
-}
