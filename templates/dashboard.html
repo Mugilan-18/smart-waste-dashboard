@@ -3,20 +3,14 @@
 <head>
   <title>Smart Waste Dashboard</title>
   <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/dashboard.js"></script>
 </head>
-<body>
 
-<div class="top">
+<body onload="startLive()">
+
+<div class="top-bar">
   <h2>Smart Waste Monitoring Dashboard</h2>
   <a href="/logout" class="logout">Logout</a>
-</div>
-
-<img src="/static/images/waste.jpg" class="banner">
-
-<div class="cards">
-  <div class="card green">Total Bins<br><span id="bins">0</span></div>
-  <div class="card orange">Monitoring<br>LIVE</div>
-  <div class="card blue">System<br>ONLINE</div>
 </div>
 
 <table>
@@ -24,40 +18,19 @@
     <tr>
       <th>Bin ID</th>
       <th>Area</th>
-      <th>Waste</th>
-      <th>Gas</th>
-      <th>Level %</th>
+      <th>Gas Value</th>
+      <th>Bin Level %</th>
       <th>Status</th>
     </tr>
   </thead>
-  <tbody id="row">
-    <tr><td colspan="6">No ESP data received yet</td></tr>
+  <tbody id="tableBody">
+    <tr>
+      <td colspan="5">Waiting for ESP data...</td>
+    </tr>
   </tbody>
 </table>
 
-<script>
-setInterval(() => {
-  fetch("/api/data")
-    .then(r => r.json())
-    .then(d => {
-      if (!d) return;
-
-      let status = "NORMAL";
-      if (d.gas > 400 || d.level > 80) status = "CRITICAL";
-
-      document.getElementById("bins").innerText = 1;
-      document.getElementById("row").innerHTML = `
-        <tr class="${status}">
-          <td>${d.bin_id}</td>
-          <td>${d.area}</td>
-          <td>${d.waste_type}</td>
-          <td>${d.gas}</td>
-          <td>${d.level}</td>
-          <td>${status}</td>
-        </tr>`;
-    });
-}, 3000);
-</script>
-
 </body>
 </html>
+
+
