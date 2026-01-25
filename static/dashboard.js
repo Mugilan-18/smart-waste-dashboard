@@ -1,21 +1,11 @@
 setInterval(() => {
   fetch("/api/data")
-    .then(res => res.json())
+    .then(r => r.json())
     .then(d => {
-      if (!d) return;
-
-      let status = "NORMAL";
-      if (d.gas > 400 || d.level > 90) status = "CRITICAL";
-      else if (d.gas > 250 || d.level > 70) status = "WARNING";
-
-      document.getElementById("data-row").innerHTML = `
-        <tr>
-          <td>${d.bin_id}</td>
-          <td>${d.area}</td>
-          <td>${d.gas}</td>
-          <td>${d.level}</td>
-          <td class="${status.toLowerCase()}">${status}</td>
-        </tr>
-      `;
+      document.getElementById("bin_id").innerText = d.bin_id;
+      document.getElementById("area").innerText = d.area;
+      document.getElementById("gas").innerText = d.gas;
+      document.getElementById("level").innerText = d.level;
+      document.getElementById("status").innerText = d.status;
     });
-}, 2000);   // 2 sec → smooth real-time
+}, 2000);
