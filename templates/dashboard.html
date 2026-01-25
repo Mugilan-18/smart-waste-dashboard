@@ -1,43 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/dashboard.js"></script>
 </head>
-<body>
+<body class="dashboard-bg">
 
 <div class="top-bar">
   <h2>Smart Waste Monitoring Dashboard</h2>
-  <a href="/logout" class="logout-btn">Logout</a>
+  <a href="/logout" class="logout">Logout</a>
 </div>
 
 <div class="banner"></div>
 
-<div class="cards">
-  <div class="card green">Total Bins<br><span id="total">1</span></div>
-  <div class="card yellow">Monitoring<br>LIVE</div>
-  <div class="card blue">System<br>ONLINE</div>
+<div class="grid">
+  <div>Bin ID<br><span id="bin_id">-</span></div>
+  <div>Area<br><span id="area">-</span></div>
+  <div>Gas<br><span id="gas">0</span></div>
+  <div>Bin Level %<br><span id="level">0</span></div>
+  <div>Status<br><span id="status">OFFLINE</span></div>
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Bin ID</th>
-      <th>Area</th>
-      <th>Gas Value</th>
-      <th>Bin Level %</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody id="data-row">
-    <tr>
-      <td colspan="5">Waiting for ESP data...</td>
-    </tr>
-  </tbody>
-</table>
 
 </body>
 </html>
-
 
