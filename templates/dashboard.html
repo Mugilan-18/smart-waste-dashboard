@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Smart Waste Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <script src="/static/dashboard.js"></script>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </head>
-
-<body onload="startLive()">
+<body>
 
 <div class="top-bar">
   <h2>Smart Waste Monitoring Dashboard</h2>
-  <a href="/logout" class="logout">Logout</a>
+  <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+<div class="banner"></div>
+
+<div class="cards">
+  <div class="card green">Total Bins<br><span id="total">1</span></div>
+  <div class="card yellow">Monitoring<br>LIVE</div>
+  <div class="card blue">System<br>ONLINE</div>
 </div>
 
 <table>
@@ -23,7 +30,7 @@
       <th>Status</th>
     </tr>
   </thead>
-  <tbody id="tableBody">
+  <tbody id="data-row">
     <tr>
       <td colspan="5">Waiting for ESP data...</td>
     </tr>
