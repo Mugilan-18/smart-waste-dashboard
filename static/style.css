@@ -26,15 +26,19 @@ body {
 button {
   padding: 10px;
   width: 100%;
-  background: blue;
+  background: #0d6efd;
   color: white;
   border: none;
+}
+
+.error {
+  color: red;
 }
 
 .top-bar {
   background: green;
   color: white;
-  padding: 10px;
+  padding: 15px;
 }
 
 .logout {
@@ -47,6 +51,7 @@ table {
   width: 90%;
   margin: 30px auto;
   border-collapse: collapse;
+  background: white;
 }
 
 th, td {
@@ -56,13 +61,13 @@ th, td {
 }
 
 .NORMAL {
-  background: #a8f0a5;
+  background: #c8e6c9;
 }
 
 .WARNING {
-  background: #ffe066;
+  background: #fff3cd;
 }
 
 .CRITICAL {
-  background: #ff6b6b;
+  background: #f8d7da;
 }
