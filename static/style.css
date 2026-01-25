@@ -1,46 +1,41 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+body { margin:0; font-family: Arial; }
 
+/* LOGIN */
 .login-bg {
-  background: url("../images/smart_city.jpg") no-repeat center center/cover;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: url("images/smart_city.jpg") center/cover;
+  height:100vh; display:flex; justify-content:center; align-items:center;
 }
-
 .login-card {
-  background: rgba(255,255,255,0.95);
-  padding: 30px;
-  width: 360px;
-  border-radius: 10px;
-  text-align: center;
+  background:white; padding:30px; border-radius:10px; text-align:center;
 }
-
-.logo {
-  width: 80px;
-  margin-bottom: 10px;
+.login-card input, button {
+  width:100%; margin:8px 0; padding:10px;
 }
+.error { color:red; }
 
-.login-card input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+/* DASHBOARD */
+.top-bar {
+  background:#2e7d32; color:white;
+  padding:10px 20px; display:flex; justify-content:space-between;
 }
-
-.login-card button {
-  width: 100%;
-  padding: 10px;
-  background: #007bff;
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.banner {
+  background:url("images/waste.jpg") center/cover;
+  height:250px;
 }
-
-.error {
-  color: red;
+.grid {
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:15px;
+  padding:20px;
+}
+.grid div {
+  background:#f2f2f2;
+  padding:20px;
+  border-radius:8px;
+  text-align:center;
+  font-size:18px;
+}
+.logout {
+  color:white; text-decoration:none;
 }
 
