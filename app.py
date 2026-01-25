@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, session, jsonify
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -45,8 +45,12 @@ def update():
 
 @app.route("/api/data")
 def data():
-    return jsonify(latest_data)
+    if latest_data:
+        return jsonify(latest_data)
+    return jsonify({"status": "no_data"})
 
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+
