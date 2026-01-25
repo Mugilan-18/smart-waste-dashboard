@@ -1,53 +1,21 @@
-.top-bar {
-  background: #2e7d32;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-}
+setInterval(() => {
+  fetch("/api/data")
+    .then(res => res.json())
+    .then(d => {
+      if (!d) return;
 
-.logout-btn {
-  background: red;
-  color: white;
-  padding: 8px 12px;
-  text-decoration: none;
-}
+      let status = "NORMAL";
+      if (d.gas > 400 || d.level > 90) status = "CRITICAL";
+      else if (d.gas > 250 || d.level > 70) status = "WARNING";
 
-.banner {
-  background: url("../images/waste.jpg") center/cover;
-  height: 250px;
-}
-
-.cards {
-  display: flex;
-  gap: 15px;
-  padding: 15px;
-}
-
-.card {
-  flex: 1;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-size: 18px;
-}
-
-.green { background: green; }
-.yellow { background: orange; }
-.blue { background: #1976d2; }
-
-table {
-  width: 95%;
-  margin: 20px auto;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-}
-
-.critical { color: red; font-weight: bold; }
-.warning { color: orange; font-weight: bold; }
-.normal { color: green; font-weight: bold; }
+      document.getElementById("data-row").innerHTML = `
+        <tr>
+          <td>${d.bin_id}</td>
+          <td>${d.area}</td>
+          <td>${d.gas}</td>
+          <td>${d.level}</td>
+          <td class="${status.toLowerCase()}">${status}</td>
+        </tr>
+      `;
+    });
+}, 2000);   // 2 sec → smooth real-time
