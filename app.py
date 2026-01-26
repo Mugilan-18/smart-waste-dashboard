@@ -1,34 +1,25 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 from datetime import timedelta
+import time
 
 app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
 app.permanent_session_lifetime = timedelta(minutes=30)
 
-latest_data = {
-    "bin_id": "-",
-    "area": "-",
-    "gas": 0,
-    "level": 0,
-    "status": "OFFLINE"
-}
+latest_data = None
+last_update = 0
 
 @app.route("/")
-def home():
+def root():
     return redirect("/login")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-
-        if email == "admin@govt.in" and password == "admin123":
-            session["login"] = True
+        if request.form["email"]=="admin@govt.in" and request.form["password"]=="admin123":
+            session["login"]=True
             return redirect("/dashboard")
-        else:
-            return render_template("login.html", error="Invalid credentials")
-
+        return render_template("login.html", error="Invalid credentials")
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -42,36 +33,24 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# ===== ESP8266 API =====
+# ---------- ESP API ----------
 @app.route("/api/update", methods=["POST"])
 def update():
-    global latest_data
-    data = request.json
-
-    gas = int(data.get("gas",0))
-    level = int(data.get("level",0))
-
-    if level >= 90 or gas >= 400:
-        status = "CRITICAL"
-    elif level >= 60 or gas >= 250:
-        status = "WARNING"
-    else:
-        status = "NORMAL"
-
-    latest_data = {
-        "bin_id": data.get("bin_id","-"),
-        "area": data.get("area","-"),
-        "gas": gas,
-        "level": level,
-        "status": status
-    }
-    return jsonify({"message":"ok"}),200
+    global latest_data, last_update
+    latest_data = request.json
+    last_update = time.time()
+    return jsonify({"status":"ok"})
 
 @app.route("/api/data")
 def data():
-    return jsonify(latest_data)
+    if not latest_data:
+        return jsonify({"status":"NO_DATA"})
+    age = time.time() - last_update
+    if age > 10:
+        return jsonify({"status":"NO_DATA"})
+    return jsonify({"status":"OK","data":latest_data})
 
-if __name__ == "__main__":
+if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000)
 
 
