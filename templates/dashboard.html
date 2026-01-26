@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard</title>
+  <title>Smart Waste Monitoring Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+
+<body class="dashboard-body">
 
 <div class="top-bar">
-  <h2>Smart Waste Monitoring Dashboard</h2>
-  <a href="/logout" class="logout">Logout</a>
+  <span>Smart Waste Monitoring Dashboard</span>
+  <a href="/logout" class="logout-btn">Logout</a>
 </div>
+
+<img src="/static/images/waste.jpg" class="banner">
 
 <div class="cards">
   <div class="card green">Total Bins<br><b>1</b></div>
-  <div class="card orange">Monitoring<br><b>LIVE</b></div>
+  <div class="card yellow">Monitoring<br><b>LIVE</b></div>
   <div class="card blue">System<br><b>ONLINE</b></div>
 </div>
 
@@ -28,9 +32,9 @@
   <tr>
     <td id="bin_id">-</td>
     <td id="area">-</td>
-    <td id="gas">-</td>
-    <td id="level">-</td>
-    <td id="status">No ESP Data received yet</td>
+    <td id="gas">0</td>
+    <td id="level">0</td>
+    <td id="status">OFFLINE</td>
   </tr>
 </table>
 
