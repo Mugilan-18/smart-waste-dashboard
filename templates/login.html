@@ -2,31 +2,28 @@
 <html>
 <head>
   <title>Smart City Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/style.css">
 </head>
-
-<body class="login-body">
+<body class="login-bg">
 
 <div class="login-box">
+  <h1>Smart City</h1>
   <img src="/static/images/govt_logo.png" class="govt-logo">
-  <h2>Government of India</h2>
-  <p>Municipal Waste System</p>
-
-  {% if error %}
-  <p style="color:red">{{ error }}</p>
-  {% endif %}
 
   <form method="POST">
     <input type="email" name="email" placeholder="Email ID" required>
-
+    
     <div class="password-box">
-      <input type="password" id="pwd" name="password" placeholder="Password" required>
+      <input type="password" name="password" id="pwd" placeholder="Password" required>
       <span onclick="togglePwd()">👁</span>
     </div>
 
     <button type="submit">Login</button>
   </form>
+
+  {% if error %}
+  <p class="error">{{ error }}</p>
+  {% endif %}
 </div>
 
 <script>
@@ -38,6 +35,8 @@ function togglePwd(){
 
 </body>
 </html>
+
+
 
 
 
