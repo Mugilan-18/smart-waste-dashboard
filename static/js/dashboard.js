@@ -1,32 +1,40 @@
-setInterval(()=>{
-fetch("/api/data")
-.then(r=>r.json())
-.then(res=>{
-    const table = document.getElementById("table-body");
-    const system = document.getElementById("system");
+async function loadData() {
+    const res = await fetch("/api/data");
+    const data = await res.json();
 
-    if(!res.connected){
-        system.innerText = "Connection Lost";
-        system.className = "status-box red";
-        table.innerHTML = "<tr><td colspan='5' class='no-data'>Data Not Received</td></tr>";
+    const body = document.getElementById("tableBody");
+
+    if (!data.connected) {
+        document.getElementById("totalBins").innerText = "Total Bins: 0";
+        body.innerHTML = `
+            <tr>
+                <td colspan="5" class="no-data">
+                    No ESP Data received yet
+                </td>
+            </tr>`;
         return;
     }
 
-    system.innerText = "System ONLINE";
-    system.className = "status-box blue";
+    document.getElementById("totalBins").innerText =
+        "Total Bins: " + data.total_bins;
 
-    const d = res.data;
-    let status = "NORMAL";
-    if(d.gas > 300 || d.level > 80) status = "CRITICAL";
-    else if(d.gas > 200 || d.level > 60) status = "WARNING";
+    body.innerHTML = "";
 
-    table.innerHTML = `
-    <tr>
-        <td>${d.bin_id}</td>
-        <td>${d.area}</td>
-        <td>${d.gas}</td>
-        <td>${d.level}%</td>
-        <td>${status}</td>
-    </tr>`;
-});
-},2000);
+    const b = data.data;
+
+    let status = "Normal";
+    if (b.gas > 150 || b.level > 90) status = "Critical";
+    else if (b.gas > 80 || b.level > 70) status = "Warning";
+
+    body.innerHTML = `
+        <tr>
+            <td>${b.bin_id}</td>
+            <td>${b.area}</td>
+            <td>${b.gas}</td>
+            <td>${b.level}%</td>
+            <td>${status}</td>
+        </tr>`;
+}
+
+setInterval(loadData, 2000);
+loadData();
