@@ -16,10 +16,10 @@ def root():
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        if request.form["email"]=="admin@govt.in" and request.form["password"]=="admin123":
-            session["login"]=True
+        if request.form["email"] == "admin@govt.in" and request.form["password"] == "admin123":
+            session["login"] = True
             return redirect("/dashboard")
-        return render_template("login.html", error="Invalid credentials")
+        return render_template("login.html", error="Invalid Login Credentials")
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -33,7 +33,7 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# ---------- ESP API ----------
+# ---------- ESP DATA API ----------
 @app.route("/api/update", methods=["POST"])
 def update():
     global latest_data, last_update
@@ -43,14 +43,9 @@ def update():
 
 @app.route("/api/data")
 def data():
-    if not latest_data:
-        return jsonify({"status":"NO_DATA"})
-    age = time.time() - last_update
-    if age > 10:
-        return jsonify({"status":"NO_DATA"})
-    return jsonify({"status":"OK","data":latest_data})
+    if not latest_data or time.time() - last_update > 10:
+        return jsonify({"connected": False})
+    return jsonify({"connected": True, "data": latest_data})
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-
