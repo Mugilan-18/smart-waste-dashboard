@@ -2,22 +2,27 @@
 <html>
 <head>
   <title>Smart City Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body class="login-body">
 
 <div class="login-box">
   <img src="/static/images/govt_logo.png" class="govt-logo">
-
   <h2>Government of India</h2>
   <p>Municipal Waste System</p>
+
+  {% if error %}
+  <p style="color:red">{{ error }}</p>
+  {% endif %}
 
   <form method="POST">
     <input type="email" name="email" placeholder="Email ID" required>
 
     <div class="password-box">
-      <input type="password" name="password" id="password" placeholder="Password" required>
-      <span onclick="toggle()">👁</span>
+      <input type="password" id="pwd" name="password" placeholder="Password" required>
+      <span onclick="togglePwd()">👁</span>
     </div>
 
     <button type="submit">Login</button>
@@ -25,14 +30,15 @@
 </div>
 
 <script>
-function toggle(){
-  let p = document.getElementById("password");
+function togglePwd(){
+  let p = document.getElementById("pwd");
   p.type = p.type === "password" ? "text" : "password";
 }
 </script>
 
 </body>
 </html>
+
 
 
 
