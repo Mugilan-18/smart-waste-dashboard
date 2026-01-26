@@ -1,23 +1,23 @@
 /* ===== LOGIN ===== */
 .login-body{
-  background: url("/static/images/smart_city.jpg") no-repeat center/cover;
   height:100vh;
+  margin:0;
+  background:url("/static/images/smart_city.jpg") no-repeat center/cover;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
 .login-box{
-  background:white;
   width:320px;
+  background:white;
   padding:25px;
-  border-radius:10px;
   text-align:center;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
 
-.govt-logo{
-  width:70px;
-}
+.govt-logo{ width:70px; }
 
 .login-box input{
   width:100%;
@@ -25,15 +25,9 @@
   margin:8px 0;
 }
 
-.password-box{
-  position:relative;
-}
-
+.password-box{ position:relative; }
 .password-box span{
-  position:absolute;
-  right:10px;
-  top:12px;
-  cursor:pointer;
+  position:absolute; right:10px; top:12px; cursor:pointer;
 }
 
 .login-box button{
@@ -42,24 +36,29 @@
   background:#1976d2;
   color:white;
   border:none;
-  margin-top:10px;
+  border-radius:5px;
 }
 
 /* ===== DASHBOARD ===== */
+.dashboard-body{ margin:0; background:#f4f6f8; }
+
 .top-bar{
-  background:green;
+  background:#2e7d32;
   color:white;
   padding:15px;
   display:flex;
   justify-content:space-between;
 }
 
-.logout{
-  background:red;
+.logout-btn{
   color:white;
-  padding:6px 12px;
   text-decoration:none;
+  background:red;
+  padding:6px 12px;
+  border-radius:4px;
 }
+
+.banner{ width:100%; height:260px; object-fit:cover; }
 
 .cards{
   display:flex;
@@ -70,23 +69,24 @@
 .card{
   width:200px;
   padding:20px;
-  text-align:center;
   color:white;
-  font-weight:bold;
+  text-align:center;
+  border-radius:6px;
 }
 
-.green{background:#2e7d32;}
-.yellow{background:#f9a825;}
-.blue{background:#1565c0;}
+.green{background:#4caf50;}
+.yellow{background:#fbc02d;}
+.blue{background:#2196f3;}
 
 table{
-  width:90%;
-  margin:auto;
-  background:#fbeaea;
+  width:95%;
+  margin:20px auto;
+  background:white;
   border-collapse:collapse;
 }
 
 th,td{
+  border:1px solid #ccc;
   padding:12px;
   text-align:center;
 }
