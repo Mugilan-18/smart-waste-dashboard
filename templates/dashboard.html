@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Smart Waste Monitoring Dashboard</title>
-<link rel="stylesheet" href="/static/css/style.css">
-<script src="/static/js/dashboard.js" defer></script>
+    <title>Smart Waste Monitoring Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/dashboard.js" defer></script>
 </head>
-
 <body>
 
 <div class="top-bar">
-<h2>Smart Waste Monitoring Dashboard</h2>
-<a href="/logout" class="logout">Logout</a>
+    <h2>Smart Waste Monitoring Dashboard</h2>
+    <a href="/logout" class="logout">Logout</a>
 </div>
 
 <img src="/static/images/waste.jpg" class="banner">
 
-<div class="stats">
-<div class="card green">Total Bins<br><span id="bins">0</span></div>
-<div class="card orange">Monitoring<br>LIVE</div>
-<div class="card blue">System<br>ONLINE</div>
+<div class="status-row">
+    <div class="status-box green">Total Bins<br><span id="bins">3</span></div>
+    <div class="status-box blue" id="system">System ONLINE</div>
+    <div class="status-box orange">Monitoring LIVE</div>
 </div>
 
 <table>
 <thead>
 <tr>
-<th>Bin ID</th>
-<th>Area</th>
-<th>Gas</th>
-<th>Bin Level %</th>
-<th>Status</th>
+    <th>Bin ID</th>
+    <th>Area</th>
+    <th>Gas Level</th>
+    <th>Bin Level</th>
+    <th>Status</th>
 </tr>
 </thead>
 <tbody id="table-body">
-<tr><td colspan="5">No ESP Data received yet</td></tr>
+<tr><td colspan="5" class="no-data">Data Not Received</td></tr>
 </tbody>
 </table>
 
 </body>
 </html>
-
