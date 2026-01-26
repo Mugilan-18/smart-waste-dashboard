@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>Smart City Login</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="login-bg">
+<body class="login-body">
 
 <div class="login-box">
     <img src="/static/images/govt_logo.png" class="govt-logo">
@@ -13,15 +13,15 @@
     <p>Municipal Waste System</p>
 
     <form method="POST">
-    <input class="login-input" type="email" name="email" placeholder="Email ID" required>
+        <input type="email" name="email" placeholder="Email ID" required>
 
-    <div class="password-box">
-        <input class="login-input" type="password" name="password" id="password" placeholder="Password" required>
-        <span class="eye" onclick="togglePassword()">👁</span>
-    </div>
+        <div class="password-box">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span onclick="togglePassword()">👁</span>
+        </div>
 
-    <button class="login-btn" type="submit">Login</button>
-</form>
+        <button type="submit">Login</button>
+    </form>
 
     {% if error %}
     <p class="error">{{ error }}</p>
@@ -31,10 +31,9 @@
 <script>
 function togglePassword(){
     const p = document.getElementById("password");
-    p.type = (p.type === "password") ? "text" : "password";
+    p.type = p.type === "password" ? "text" : "password";
 }
 </script>
 
 </body>
 </html>
-
