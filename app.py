@@ -1,22 +1,34 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
+app.permanent_session_lifetime = timedelta(minutes=30)
 
-latest_data = None
-last_seen = None
+latest_data = {
+    "bin_id": "-",
+    "area": "-",
+    "gas": 0,
+    "level": 0,
+    "status": "OFFLINE"
+}
 
 @app.route("/")
-def root():
+def home():
     return redirect("/login")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        if request.form["email"] == "admin@govt.in" and request.form["password"] == "admin123":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email == "admin@govt.in" and password == "admin123":
             session["login"] = True
             return redirect("/dashboard")
+        else:
+            return render_template("login.html", error="Invalid credentials")
+
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -30,31 +42,38 @@ def logout():
     session.clear()
     return redirect("/login")
 
+# ===== ESP8266 API =====
 @app.route("/api/update", methods=["POST"])
 def update():
-    global latest_data, last_seen
-    latest_data = request.json
-    last_seen = datetime.now()
-    return jsonify({"ok": True})
+    global latest_data
+    data = request.json
+
+    gas = int(data.get("gas",0))
+    level = int(data.get("level",0))
+
+    if level >= 90 or gas >= 400:
+        status = "CRITICAL"
+    elif level >= 60 or gas >= 250:
+        status = "WARNING"
+    else:
+        status = "NORMAL"
+
+    latest_data = {
+        "bin_id": data.get("bin_id","-"),
+        "area": data.get("area","-"),
+        "gas": gas,
+        "level": level,
+        "status": status
+    }
+    return jsonify({"message":"ok"}),200
 
 @app.route("/api/data")
 def data():
-    if not latest_data:
-        return jsonify({"system_status": "OFFLINE"})
-
-    offline = datetime.now() - last_seen > timedelta(seconds=8)
-
-    return jsonify({
-        "bin_id": latest_data["bin_id"],
-        "area": latest_data["area"],
-        "gas": latest_data["gas"],
-        "bin_level": latest_data["bin_level"],
-        "system_status": "OFFLINE" if offline else "ONLINE",
-        "monitoring": "LIVE" if not offline else "STOPPED"
-    })
+    return jsonify(latest_data)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
+
 
 
 
