@@ -5,19 +5,13 @@ app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
 app.permanent_session_lifetime = timedelta(minutes=30)
 
-latest_data = {
-    "bin_id": "-",
-    "area": "-",
-    "gas": 0,
-    "level": 0,
-    "status": "OFFLINE"
-}
+latest_data = None
 
 @app.route("/")
 def home():
     return redirect("/login")
 
-@app.route("/login", methods=["GET","POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -26,8 +20,7 @@ def login():
         if email == "admin@govt.in" and password == "admin123":
             session["login"] = True
             return redirect("/dashboard")
-        else:
-            return render_template("login.html", error="Invalid credentials")
+        return render_template("login.html", error="Invalid Credentials")
 
     return render_template("login.html")
 
@@ -42,37 +35,37 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# ===== ESP8266 API =====
+# ---------- ESP API ----------
 @app.route("/api/update", methods=["POST"])
 def update():
     global latest_data
     data = request.json
 
-    gas = int(data.get("gas",0))
-    level = int(data.get("level",0))
+    gas = int(data.get("gas", 0))
+    level = int(data.get("level", 0))
 
-    if level >= 90 or gas >= 400:
+    if gas >= 400 or level >= 90:
         status = "CRITICAL"
-    elif level >= 60 or gas >= 250:
+    elif gas >= 250 or level >= 60:
         status = "WARNING"
     else:
         status = "NORMAL"
 
     latest_data = {
-        "bin_id": data.get("bin_id","-"),
-        "area": data.get("area","-"),
+        "bin_id": data.get("bin_id"),
+        "area": data.get("area"),
         "gas": gas,
         "level": level,
         "status": status
     }
-    return jsonify({"message":"ok"}),200
+    return jsonify({"msg": "ok"})
 
 @app.route("/api/data")
 def data():
     return jsonify(latest_data)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
 
 
 
