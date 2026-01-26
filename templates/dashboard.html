@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Smart Waste Monitoring Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/style.css">
+<title>Smart Waste Monitoring Dashboard</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="/static/js/dashboard.js" defer></script>
 </head>
 
-<body class="dashboard-body">
+<body>
 
 <div class="top-bar">
-  <span>Smart Waste Monitoring Dashboard</span>
-  <a href="/logout" class="logout-btn">Logout</a>
+<h2>Smart Waste Monitoring Dashboard</h2>
+<a href="/logout" class="logout">Logout</a>
 </div>
 
 <img src="/static/images/waste.jpg" class="banner">
 
-<div class="cards">
-  <div class="card green">Total Bins<br><b>1</b></div>
-  <div class="card yellow">Monitoring<br><b>LIVE</b></div>
-  <div class="card blue">System<br><b>ONLINE</b></div>
+<div class="stats">
+<div class="card green">Total Bins<br><span id="bins">0</span></div>
+<div class="card orange">Monitoring<br>LIVE</div>
+<div class="card blue">System<br>ONLINE</div>
 </div>
 
 <table>
-  <tr>
-    <th>Bin ID</th>
-    <th>Area</th>
-    <th>Gas</th>
-    <th>Bin Level %</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td id="bin_id">-</td>
-    <td id="area">-</td>
-    <td id="gas">0</td>
-    <td id="level">0</td>
-    <td id="status">OFFLINE</td>
-  </tr>
+<thead>
+<tr>
+<th>Bin ID</th>
+<th>Area</th>
+<th>Gas</th>
+<th>Bin Level %</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="table-body">
+<tr><td colspan="5">No ESP Data received yet</td></tr>
+</tbody>
 </table>
 
-<script src="/static/dashboard.js"></script>
 </body>
 </html>
+
