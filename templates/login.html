@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart City Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="login-bg">
+
+<div class="login-box">
+    <img src="/static/images/govt_logo.png" class="govt-logo">
+
+    <h3>Government of India</h3>
+    <p>Municipal Waste System</p>
+
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email ID" required>
+
+        <div class="password-box">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <span onclick="togglePassword()">👁</span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+
+<script>
+function togglePassword(){
+    const p = document.getElementById("password");
+    p.type = (p.type === "password") ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
