@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Dashboard</title>
   <link rel="stylesheet" href="/static/style.css">
-  <script src="/static/dashboard.js"></script>
 </head>
-<body class="dashboard-bg">
+<body>
 
 <div class="top-bar">
-  <h2>Smart Waste Monitoring Dashboard</h2>
+  Smart Waste Monitoring Dashboard
   <a href="/logout" class="logout">Logout</a>
 </div>
 
-<div class="banner"></div>
-
-<div class="grid">
-  <div>Bin ID<br><span id="bin_id">-</span></div>
-  <div>Area<br><span id="area">-</span></div>
-  <div>Gas<br><span id="gas">0</span></div>
-  <div>Bin Level %<br><span id="level">0</span></div>
-  <div>Status<br><span id="status">OFFLINE</span></div>
+<div class="cards">
+  <div class="card green">Total Bins<br><b>1</b></div>
+  <div class="card yellow" id="monitor">Monitoring<br>LIVE</div>
+  <div class="card blue" id="system">System<br>ONLINE</div>
 </div>
 
+<table>
+<tr>
+  <th>Bin ID</th>
+  <th>Area</th>
+  <th>Gas</th>
+  <th>Bin Level %</th>
+  <th>Status</th>
+</tr>
+<tr>
+  <td id="bin_id">-</td>
+  <td id="area">-</td>
+  <td id="gas">0</td>
+  <td id="level">0</td>
+  <td id="status">OFFLINE</td>
+</tr>
+</table>
+
+<script src="/static/dashboard.js"></script>
 </body>
 </html>
+
+
 
