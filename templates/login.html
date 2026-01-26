@@ -13,15 +13,15 @@
     <p>Municipal Waste System</p>
 
     <form method="POST">
-        <input type="email" name="email" placeholder="Email ID" required>
+    <input class="login-input" type="email" name="email" placeholder="Email ID" required>
 
-        <div class="password-box">
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <span onclick="togglePassword()">👁</span>
-        </div>
+    <div class="password-box">
+        <input class="login-input" type="password" name="password" id="password" placeholder="Password" required>
+        <span class="eye" onclick="togglePassword()">👁</span>
+    </div>
 
-        <button type="submit">Login</button>
-    </form>
+    <button class="login-btn" type="submit">Login</button>
+</form>
 
     {% if error %}
     <p class="error">{{ error }}</p>
@@ -37,3 +37,4 @@ function togglePassword(){
 
 </body>
 </html>
+
