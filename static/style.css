@@ -1,86 +1,92 @@
-body {
-  margin: 0;
-  font-family: Arial;
+/* ===== LOGIN ===== */
+.login-body{
+  height:100vh;
+  margin:0;
+  background:url("/static/images/smart_city.jpg") no-repeat center/cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* LOGIN */
-.login-bg {
-  background: url("/static/images/smart_city.jpg") center/cover no-repeat;
-  height: 100vh;
+.login-box{
+  width:320px;
+  background:white;
+  padding:25px;
+  text-align:center;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
 
-.login-box {
-  width: 320px;
-  background: light blue;
-  padding: 25px;
-  border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+.govt-logo{ width:70px; }
+
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
 }
 
-.login-box input,
-.login-box button {
-  width: 100%;
-  height: 42px;
-  margin: 10px 0;
+.password-box{ position:relative; }
+.password-box span{
+  position:absolute; right:10px; top:12px; cursor:pointer;
 }
 
-.password-box {
-  position: relative;
+.login-box button{
+  width:100%;
+  padding:10px;
+  background:#1976d2;
+  color:white;
+  border:none;
+  border-radius:5px;
 }
 
-.password-box span {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-  cursor: pointer;
+/* ===== DASHBOARD ===== */
+.dashboard-body{ margin:0; background:#f4f6f8; }
+
+.top-bar{
+  background:#2e7d32;
+  color:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
 }
 
-/* DASHBOARD */
-.top-bar {
-  background: green;
-  color: white;
-  padding: 15px;
-  font-size: 24px;
-  display: flex;
-  justify-content: space-between;
+.logout-btn{
+  color:white;
+  text-decoration:none;
+  background:red;
+  padding:6px 12px;
+  border-radius:4px;
 }
 
-.logout {
-  color: white;
-  text-decoration: none;
+.banner{ width:100%; height:260px; object-fit:cover; }
+
+.cards{
+  display:flex;
+  gap:20px;
+  margin:20px;
 }
 
-.cards {
-  display: flex;
-  gap: 15px;
-  margin: 20px;
+.card{
+  width:200px;
+  padding:20px;
+  color:white;
+  text-align:center;
+  border-radius:6px;
 }
 
-.card {
-  flex: 1;
-  padding: 25px;
-  color: white;
-  font-size: 18px;
-  text-align: center;
+.green{background:#4caf50;}
+.yellow{background:#fbc02d;}
+.blue{background:#2196f3;}
+
+table{
+  width:95%;
+  margin:20px auto;
+  background:white;
+  border-collapse:collapse;
 }
 
-.green { background: green; }
-.orange { background: orange; }
-.blue { background: #1976d2; }
-
-table {
-  width: 90%;
-  margin: auto;
-  background: #fff3e0;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: center;
+th,td{
+  border:1px solid #ccc;
+  padding:12px;
+  text-align:center;
 }
