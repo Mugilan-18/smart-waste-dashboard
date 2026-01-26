@@ -1,17 +1,11 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
-app.permanent_session_lifetime = timedelta(minutes=30)
 
-latest_data = {
-    "bin_id": "-",
-    "area": "-",
-    "gas": 0,
-    "level": 0,
-    "status": "OFFLINE"
-}
+latest_data = None
+last_seen = None
 
 @app.route("/")
 def root():
@@ -23,7 +17,6 @@ def login():
         if request.form["email"] == "admin@govt.in" and request.form["password"] == "admin123":
             session["login"] = True
             return redirect("/dashboard")
-        return render_template("login.html", error="Invalid Login")
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -37,37 +30,32 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# -------- ESP API --------
 @app.route("/api/update", methods=["POST"])
 def update():
-    global latest_data
-    data = request.json
-
-    level = int(data.get("level", 0))
-    gas = int(data.get("gas", 0))
-
-    if level >= 90 or gas >= 300:
-        status = "CRITICAL"
-    elif level >= 60:
-        status = "WARNING"
-    else:
-        status = "NORMAL"
-
-    latest_data = {
-        "bin_id": data.get("bin_id"),
-        "area": data.get("area"),
-        "gas": gas,
-        "level": level,
-        "status": status
-    }
-
-    return jsonify({"message": "OK"}), 200
+    global latest_data, last_seen
+    latest_data = request.json
+    last_seen = datetime.now()
+    return jsonify({"ok": True})
 
 @app.route("/api/data")
 def data():
-    return jsonify(latest_data)
+    if not latest_data:
+        return jsonify({"system_status": "OFFLINE"})
+
+    offline = datetime.now() - last_seen > timedelta(seconds=8)
+
+    return jsonify({
+        "bin_id": latest_data["bin_id"],
+        "area": latest_data["area"],
+        "gas": latest_data["gas"],
+        "bin_level": latest_data["bin_level"],
+        "system_status": "OFFLINE" if offline else "ONLINE",
+        "monitoring": "LIVE" if not offline else "STOPPED"
+    })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
+
+
 
 
