@@ -2,32 +2,33 @@
 <html>
 <head>
     <title>Smart City Login</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="login-bg">
+<body class="login-body">
 
 <div class="login-box">
-    <img src="/static/images/govt_logo.png" class="govt-logo">
-    <h3>Government of India</h3>
+    <img src="{{ url_for('static', filename='images/govt_logo.png') }}" class="govt-logo">
+    <h2>Government of India</h2>
     <p>Municipal Waste System</p>
 
     <form method="POST">
         <input type="email" name="email" placeholder="Email ID" required>
+
         <div class="password-box">
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <span onclick="togglePwd()">👁</span>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <span onclick="togglePassword()">👁</span>
         </div>
+
         <button type="submit">Login</button>
         {% if error %}<p class="error">{{ error }}</p>{% endif %}
     </form>
 </div>
 
 <script>
-function togglePwd(){
-    const p = document.getElementById("password");
+function togglePassword() {
+    let p = document.getElementById("password");
     p.type = p.type === "password" ? "text" : "password";
 }
 </script>
-
 </body>
 </html>
