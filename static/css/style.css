@@ -1,43 +1,103 @@
-body { margin:0; font-family: Arial; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
 /* LOGIN */
 .login-body {
-    background: url("../images/smart_city.jpg") no-repeat center/cover;
-    height:100vh; display:flex; justify-content:center; align-items:center;
+    background: url("../images/smart_city.jpg") center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .login-box {
-    background:#fff; padding:25px; width:300px; text-align:center;
-    border-radius:8px;
+    background: #fff;
+    padding: 25px;
+    width: 300px;
+    text-align: center;
+    border-radius: 8px;
 }
-.login-box input, .login-box button {
-    width:100%; padding:10px; margin:8px 0;
+
+.login-box input,
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }
-.password-box { position:relative; }
+
+.password-box {
+    position: relative;
+}
+
 .password-box span {
-    position:absolute; right:10px; top:12px; cursor:pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.govt-logo {
+    width: 60px;
 }
 
 /* DASHBOARD */
 .top-bar {
-    background:green; color:white; padding:15px; display:flex;
-    justify-content:space-between; align-items:center;
+    background: green;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .logout {
-    background:red; color:white; padding:8px 15px; text-decoration:none;
+    background: red;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
 }
+
 .status-row {
-    display:flex; gap:10px; padding:10px;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
 }
+
 .card {
-    flex:1; color:white; padding:15px; text-align:center;
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
 }
-.green { background:green; }
-.orange { background:orange; }
-.blue { background:blue; }
+
+.green { background: green; }
+.orange { background: orange; }
+.blue { background: #2196f3; }
+.red { background: #e53935; }
+
+.image-section img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
 
 table {
-    width:100%; border-collapse:collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
-th { background:white; padding:10px; }
-td { background:white; padding:10px; text-align:center; }
-.no-data td { background:#ffd9a8; font-weight:bold; }
+
+th, td {
+    background: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.no-data td {
+    background: #ffd9a8;
+    font-weight: bold;
+}
