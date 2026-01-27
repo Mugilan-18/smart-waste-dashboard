@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Smart City Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="login-body">
@@ -15,7 +16,7 @@
         <input type="email" name="email" placeholder="Email ID" required>
 
         <div class="password-box">
-            <input type="password" name="password" id="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
             <span onclick="togglePassword()">👁</span>
         </div>
 
@@ -26,7 +27,7 @@
 
 <script>
 function togglePassword() {
-    let p = document.getElementById("password");
+    const p = document.getElementById("password");
     p.type = p.type === "password" ? "text" : "password";
 }
 </script>
