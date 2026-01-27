@@ -1,32 +1,35 @@
-setInterval(()=>{
-fetch("/api/data")
-.then(r=>r.json())
-.then(res=>{
-    const table = document.getElementById("table-body");
-    const system = document.getElementById("system");
+setInterval(fetchData, 2000);
 
-    if(!res.connected){
-        system.innerText = "Connection Lost";
-        system.className = "status-box red";
-        table.innerHTML = "<tr><td colspan='5' class='no-data'>Data Not Received</td></tr>";
-        return;
-    }
+function fetchData() {
+    fetch("/api/data")
+        .then(res => res.json())
+        .then(res => {
+            if (!res.connected) {
+                showNoData();
+                return;
+            }
 
-    system.innerText = "System ONLINE";
-    system.className = "status-box blue";
+            const d = res.data;
+            document.getElementById("totalBins").innerText = "Total Bins: " + d.total_bins;
+            document.getElementById("system").innerText = "System ONLINE";
 
-    const d = res.data;
-    let status = "NORMAL";
-    if(d.gas > 300 || d.level > 80) status = "CRITICAL";
-    else if(d.gas > 200 || d.level > 60) status = "WARNING";
+            let status = "NORMAL";
+            if (d.gas > 300 || d.level > 90) status = "CRITICAL";
+            else if (d.gas > 150 || d.level > 70) status = "WARNING";
 
-    table.innerHTML = `
-    <tr>
-        <td>${d.bin_id}</td>
-        <td>${d.area}</td>
-        <td>${d.gas}</td>
-        <td>${d.level}%</td>
-        <td>${status}</td>
-    </tr>`;
-});
-},2000);
+            document.getElementById("tableBody").innerHTML = `
+                <tr>
+                    <td>${d.bin_id}</td>
+                    <td>${d.area}</td>
+                    <td>${d.gas}</td>
+                    <td>${d.level}%</td>
+                    <td>${status}</td>
+                </tr>`;
+        });
+}
+
+function showNoData() {
+    document.getElementById("system").innerText = "Connection Lost";
+    document.getElementById("tableBody").innerHTML =
+        `<tr class="no-data"><td colspan="5">No ESP Data received yet</td></tr>`;
+}
