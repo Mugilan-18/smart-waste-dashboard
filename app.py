@@ -1,25 +1,28 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 from datetime import timedelta
-import time
 
 app = Flask(__name__)
 app.secret_key = "smart_waste_secret"
 app.permanent_session_lifetime = timedelta(minutes=30)
 
 latest_data = None
-last_update = 0
+connected = False
 
 @app.route("/")
-def root():
+def home():
     return redirect("/login")
 
-@app.route("/login", methods=["GET","POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        if request.form["email"] == "admin@govt.in" and request.form["password"] == "admin123":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email == "admin@govt.in" and password == "admin123":
             session["login"] = True
             return redirect("/dashboard")
-        return render_template("login.html", error="Invalid Login Credentials")
+        return render_template("login.html", error="Invalid Login")
+
     return render_template("login.html")
 
 @app.route("/dashboard")
@@ -33,19 +36,27 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# ---------- ESP DATA API ----------
+# -------- ESP API --------
 @app.route("/api/update", methods=["POST"])
-def update():
-    global latest_data, last_update
+def update_data():
+    global latest_data, connected
     latest_data = request.json
-    last_update = time.time()
-    return jsonify({"status":"ok"})
+    connected = True
+    return jsonify({"status": "received"}), 200
 
 @app.route("/api/data")
-def data():
-    if not latest_data or time.time() - last_update > 10:
-        return jsonify({"connected": False})
-    return jsonify({"connected": True, "data": latest_data})
+def get_data():
+    if not connected or not latest_data:
+        return jsonify({
+            "connected": False,
+            "total_bins": 0,
+            "message": "No ESP Data received yet"
+        })
+    return jsonify({
+        "connected": True,
+        "total_bins": latest_data.get("total_bins", 0),
+        "data": latest_data.get("data", {})
+    })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
