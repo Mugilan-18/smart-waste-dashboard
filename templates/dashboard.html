@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -13,28 +14,30 @@
 
 <div class="status-row">
     <div class="card green" id="totalBins">Total Bins: 0</div>
-    <div class="card orange" id="monitoring">Monitoring LIVE</div>
-    <div class="card blue" id="system">System OFFLINE</div>
+    <div class="card orange">Monitoring LIVE</div>
+    <div class="card blue" id="system">System ONLINE</div>
 </div>
 
-<div class="table-section">
-    <table>
-        <thead>
-            <tr>
-                <th>Bin ID</th>
-                <th>Area</th>
-                <th>Gas Level</th>
-                <th>Bin Level</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            <tr class="no-data">
-                <td colspan="5">No ESP Data received yet</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="image-section">
+    <img src="{{ url_for('static', filename='images/waste.jpg') }}">
 </div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Bin ID</th>
+            <th>Area</th>
+            <th>Gas Level</th>
+            <th>Bin Level</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <tr class="no-data">
+            <td colspan="5">No ESP Data received yet</td>
+        </tr>
+    </tbody>
+</table>
 
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
